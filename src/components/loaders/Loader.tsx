@@ -16,12 +16,12 @@ export function Loader({ progress: progressProp, className }: LoaderProps) {
       role="status"
       aria-live="polite"
     >
-      <span className="text-xs font-medium uppercase tracking-wide text-white/80">
+      <span className="text-xs font-medium uppercase tracking-wide text-black/70">
         Loading
       </span>
-      <div className="h-1 w-48 overflow-hidden rounded-full bg-white/20">
+      <div className="h-1 w-48 overflow-hidden rounded-full bg-black/15">
         <div
-          className="h-full bg-white transition-[width] duration-150 ease-out"
+          className="h-full bg-black transition-[width] duration-150 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>

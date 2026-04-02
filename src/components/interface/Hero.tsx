@@ -4,10 +4,10 @@ export function Hero() {
       id="hero"
       className="flex min-h-screen flex-col justify-center px-6 py-24 md:px-12"
     >
-      <h1 className="text-4xl font-bold text-white drop-shadow sm:text-5xl md:text-6xl">
+      <h1 className="text-4xl font-bold text-black sm:text-5xl md:text-6xl">
         Hello world! I'm Asakundwi Netshimbupfe
       </h1>
-      <p className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/90 md:text-xl">
+      <p className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-black md:text-xl">
         Front-End Developer dedicated to crafting intuitive, accessible, and
         high-conversion user interfaces. I specialize in JavaScript (ES6+) and
         Next.js, with a keen eye for responsive design and UI/UX principles. I
