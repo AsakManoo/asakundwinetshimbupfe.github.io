@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  [id] {
+    scroll-margin-top: 7.5rem;
+  }
+}

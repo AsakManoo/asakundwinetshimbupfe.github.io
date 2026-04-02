@@ -3,16 +3,20 @@ import { Suspense } from 'react'
 import { Scene } from './components/canvas/Scene'
 import { About } from './components/interface/About'
 import { Contact } from './components/interface/Contact'
+import { Resume } from './components/interface/Resume'
 import { Hero } from './components/interface/Hero'
+import { Navbar } from './components/interface/Navbar'
 import { CanvasLoader } from './components/loaders/CanvasLoader'
 import { PageLoader } from './components/loaders/PageLoader'
 import { useScroll } from './hooks/useScroll'
+import { Service } from './components/interface/Service'
+import { Portfolio } from './components/interface/Portfolio'
 
 function App() {
   useScroll()
 
   return (
-    <div className="relative min-h-screen bg-neutral-950">
+    <div className="relative min-h-screen bg-white text-black">
       <PageLoader />
       <div className="fixed inset-0 -z-10 h-screen w-full">
         <Canvas
@@ -21,16 +25,20 @@ function App() {
           gl={{ antialias: true, alpha: true }}
           className="h-full w-full"
         >
-          <color attach="background" args={['#0a0a0a']} />
+          <color attach="background" args={['#ffffff']} />
           <Suspense fallback={null}>
             <CanvasLoader />
             <Scene />
           </Suspense>
         </Canvas>
       </div>
+      <Navbar />
       <main className="relative z-10">
         <Hero />
         <About />
+        <Resume />
+        <Portfolio />
+        <Service />
         <Contact />
       </main>
     </div>
