@@ -1,5 +1,45 @@
 @import "tailwindcss";
 
+/* Plain CSS: Tailwind does not emit group-hover variants for ad-hoc utility class names. */
+@keyframes asa-dot-bounce {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+  }
+  42% {
+    transform: translateY(-0.26em);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  68% {
+    transform: translateY(-0.05em);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  82% {
+    transform: translateY(-0.015em);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  92% {
+    transform: translateY(-0.004em);
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  /* `linear` so easing between keyframes comes from each step’s animation-timing-function */
+  .group:hover .asa-dot-bounce {
+    animation: asa-dot-bounce 1.15s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .group:hover .asa-dot-bounce {
+      animation: none;
+    }
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
