@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type AnimationEvent } from 'react'
 
 import heroImage from '../../assets/hero02.png'
 
@@ -92,6 +92,70 @@ const SERVICES = [
 ] as const
 
 const BADGES = ['Modern stack', 'Accessible', 'User-focused'] as const
+
+const HERO_ROTATING_PHRASES = [
+  'Web Dev',
+  'React & Next.js',
+  'Mobile Dev',
+  'Responsive Design',
+] as const
+
+const ROTATING_PHRASE_MS = 3200
+
+type PhrasePhase = 'idle' | 'exit' | 'enter'
+
+function HeroRotatingTagline() {
+  const [phraseIndex, setPhraseIndex] = useState(0)
+  const [phase, setPhase] = useState<PhrasePhase>('idle')
+  const nextExitTimeoutRef = useRef<ReturnType<typeof setTimeout>>(0)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mq.matches) return
+
+    nextExitTimeoutRef.current = window.setTimeout(() => {
+      setPhase('exit')
+    }, ROTATING_PHRASE_MS)
+
+    return () => {
+      clearTimeout(nextExitTimeoutRef.current)
+    }
+  }, [])
+
+  const onPhraseAnimationEnd = (e: AnimationEvent<HTMLSpanElement>) => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mq.matches) return
+
+    const name = e.animationName
+    const isOut = name.includes('hero-phrase-out')
+    const isIn = name.includes('hero-phrase-in')
+    if (!isOut && !isIn) return
+
+    if (isOut) {
+      setPhraseIndex((i) => (i + 1) % HERO_ROTATING_PHRASES.length)
+      setPhase('enter')
+      return
+    }
+
+    setPhase('idle')
+    clearTimeout(nextExitTimeoutRef.current)
+    nextExitTimeoutRef.current = window.setTimeout(() => {
+      setPhase('exit')
+    }, ROTATING_PHRASE_MS)
+  }
+
+  const phaseClass =
+    phase === 'exit' ? 'hero-phrase-exit' : phase === 'enter' ? 'hero-phrase-enter' : ''
+
+  return (
+    <span
+      className={`block text-[clamp(2.25rem,9vw,6.5rem)] font-bold uppercase leading-[0.92] tracking-tight text-[#f53700] ${phaseClass}`}
+      onAnimationEnd={onPhraseAnimationEnd}
+    >
+      {HERO_ROTATING_PHRASES[phraseIndex]}
+    </span>
+  )
+}
 
 export function Hero() {
   const scrollTrackRef = useRef<HTMLDivElement>(null)
@@ -192,7 +256,10 @@ export function Hero() {
                 <div className="z-10 flex flex-col gap-12 lg:min-h-[min(62vh,640px)] lg:gap-0">
                   <div>
                     <p className="text-sm text-neutral-400">Hi there! this is</p>
-                    <p className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">
+                    <p
+                      id="hero-name"
+                      className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl"
+                    >
                       <HeroNameToggle />
                     </p>
                   </div>
@@ -216,7 +283,7 @@ export function Hero() {
                       <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </a>
 
-                    <p className="max-w-sm text-pretty text-sm leading-relaxed text-white/90 lg:ml-auto">
+                    <p className="max-w-sm border-b border-white/10 pb-8 text-pretty text-sm leading-relaxed text-white/90 lg:ml-auto">
                       I&apos;m a front-end developer focused on intuitive, accessible,
                       high-conversion interfaces. I work with JavaScript (ES6+), React,
                       and Next.js—building digital products that solve real user
@@ -247,9 +314,7 @@ export function Hero() {
                 <span className="block text-[clamp(2.25rem,9vw,6.5rem)] font-bold uppercase leading-[0.92] tracking-tight text-white">
                   Development
                 </span>
-                <span className="block text-[clamp(2.25rem,9vw,6.5rem)] font-bold uppercase leading-[0.92] tracking-tight text-[#f53700]">
-                  Web Developer
-                </span>
+                <HeroRotatingTagline />
               </h1>
             </div>
           </div>

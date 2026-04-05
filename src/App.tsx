@@ -11,12 +11,14 @@ import { PageLoader } from './components/loaders/PageLoader'
 import { useScroll } from './hooks/useScroll'
 import { Service } from './components/interface/Service'
 import { Portfolio } from './components/interface/Portfolio'
+import { CursorFollower } from './components/interface/CursorFollower'
 
 function App() {
   useScroll()
 
   return (
-    <div className="relative min-h-screen bg-white text-black">
+    <div className="relative min-h-screen bg-black text-white">
+      <CursorFollower />
       <PageLoader />
       <div className="fixed inset-0 -z-10 h-screen w-full">
         <Canvas
@@ -25,7 +27,7 @@ function App() {
           gl={{ antialias: true, alpha: true }}
           className="h-full w-full"
         >
-          <color attach="background" args={['#ffffff']} />
+          <color attach="background" args={['#000000']} />
           <Suspense fallback={null}>
             <CanvasLoader />
             <Scene />
